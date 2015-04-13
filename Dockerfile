@@ -93,7 +93,7 @@ ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure spark dashborads
-RUN     ln -s /src/spark-dashboards/spark.js /src/dashboards/spark.js 
+RUN     ln -s /src/spark-dashboards/spark.js /src/grafana/app/dashboards/spark.js 
 
 # ---------------- #
 #   Expose Ports   #
