@@ -4,6 +4,6 @@ docker kill spark
 docker rm spark
 truncate ./logs/* --size 0
 
-docker build -t spark github.com/jhu-chang/docker-grafana-graphite.git
-docker run -d -v $(pwd)/logs:/var/log/supervisor -p 80:80 -p 8125:8125/udp -p 8126:8126 -p 2003:2003 --name spark spark 
+docker build -t jhu/spark github.com/jhu-chang/docker-grafana-graphite.git
+docker run -d -v $(pwd)/logs:/var/log/supervisor -p 80:80 -p 8125:8125/udp -p 8126:8126 -p 2003:2003 --name spark jhu/spark 
 
