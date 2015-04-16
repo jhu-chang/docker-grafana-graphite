@@ -51,7 +51,7 @@ RUN     wget http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz -O /src/gra
 
 # Install spark addon
 RUN     mkdir /src/spark-dashboards
-RUN     git clone https://github.com/hammerlab/grafana-spark-dashboards.git /src/spark-dashboards &&\
+RUN     git clone https://github.com/jhu-chang/grafana-spark-dashboards.git /src/spark-dashboards &&\
         cd /src/spark-dashboards                                                                  &&\
 	git checkout master
 
