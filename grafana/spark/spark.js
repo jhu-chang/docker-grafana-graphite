@@ -424,8 +424,8 @@ function executorBlockMemeoryPanel(id, opts) {
   return panel(
         id + ": Block Manager Status (M)",
         [
-          alias("$prefix." + id + ".BlockManager.memory.memUsed_MB","Used Memory"),
-          alias("$prefix." + id + ".BlockManager.memory.remainingMem_MB", "Remaining Memory")
+          alias("$prefix." + id + ".BlockManager.memory.remainingMem_MB", "Remaining Memory"),
+          alias("$prefix." + id + ".BlockManager.memory.memUsed_MB","Used Memory")
         ],
         opts
   );
