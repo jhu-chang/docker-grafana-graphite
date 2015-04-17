@@ -50,10 +50,10 @@ RUN     wget http://grafanarel.s3.amazonaws.com/grafana-1.9.1.tar.gz -O /src/gra
         rm /src/grafana.tar.gz
 
 # Install spark addon
-RUN     mkdir /src/spark-dashboards
-RUN     git clone https://github.com/jhu-chang/grafana-spark-dashboards.git /src/spark-dashboards &&\
-        cd /src/spark-dashboards                                                                  &&\
-	git checkout master
+#RUN     mkdir /src/spark-dashboards
+#RUN     git clone https://github.com/jhu-chang/grafana-spark-dashboards.git /src/spark-dashboards &&\
+#        cd /src/spark-dashboards                                                                  &&\
+#	git checkout master
 
 
 # ----------------- #
@@ -93,7 +93,8 @@ ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
 ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure spark dashborads
-RUN     ln -s /src/spark-dashboards/spark.js /src/grafana/app/dashboards/spark.js 
+#RUN     ln -s /src/spark-dashboards/spark.js /src/grafana/app/dashboards/spark.js 
+ADD     ./grafana/spark./spark.js /src/grafana/app/dashboards/spark.js
 
 # ---------------- #
 #   Expose Ports   #
