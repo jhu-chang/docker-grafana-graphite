@@ -94,7 +94,7 @@ ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure spark dashborads
 #RUN     ln -s /src/spark-dashboards/spark.js /src/grafana/app/dashboards/spark.js 
-ADD     ./grafana/spark./spark.js /src/grafana/app/dashboards/spark.js
+ADD     ./grafana/spark/spark.js /src/grafana/app/dashboards/spark.js
 
 # ---------------- #
 #   Expose Ports   #
