@@ -643,7 +643,7 @@ var driver_row = {
     panel(
           "Driver GC Time/s",
           [ 
-            alias(perSecond(summarize("$prefix.$driver.jvm.PS-Scavenge.time")), 'Scavenge GC time') 
+            alias(perSecond(summarize("$prefix.$driver.jvm.PS-Scavenge.time")), 'Scavenge GC time'),
             alias(perSecond(summarize("$prefix.$driver.jvm.PS-MarkSweep.time")), 'MarkSweep GC time') 
           ],
           {
