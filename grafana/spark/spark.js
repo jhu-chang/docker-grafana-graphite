@@ -421,8 +421,10 @@ function executorBlockMemeoryPanel(id, opts) {
   opts.nullPointMode = 'connected';
   opts.stack = true;
   opts.fill = 10;
+  opts.y_formats=["none", "short"];
+  opts.leftYAxisLabel = "Memory (MB)";
   return panel(
-        id + ": Block Manager Status (M)",
+        id + ": Block Manager Status",
         [
           alias("$prefix." + id + ".BlockManager.memory.remainingMem_MB", "Remaining Memory"),
           alias("$prefix." + id + ".BlockManager.memory.memUsed_MB","Used Memory")
@@ -516,11 +518,11 @@ var executor_row = {
 }
 
 var executor_memory = {
-  title: "Executor Memories",
+  title: "Block Manager Summary",
   height: "300px",
   editable: true,
   collapse: collapseExecutors,
-  panels: []
+  panels: [executorBlockMemeoryPanel("$driver")]
 }
 
 // Add panels to the executor row based on the "executors" query
@@ -610,6 +612,7 @@ var driver_row = {
             alias("$prefix.$driver.jvm.PS-Scavenge.time", "GC time")
           ],
           {
+            span: 3,
             nullPointMode: 'connected',
             seriesOverrides: [
               {
@@ -619,16 +622,36 @@ var driver_row = {
             ]
           }
     ),
-    executorJvmPanel("$driver"),
+    panel(
+          "Driver MarkSweep GC",
+          [
+            alias("$prefix.$driver.jvm.PS-MarkSweep.count", "GC count"),
+            alias("$prefix.$driver.jvm.PS-MarkSweep.time", "GC time")
+          ],
+          {
+            span: 3,
+            nullPointMode: 'connected',
+            seriesOverrides: [
+              {
+                alias: "GC time",
+                yaxis: 2
+              }
+            ]
+          }
+    ),
+    executorJvmPanel("$driver", {span: 3}),
     panel(
           "Driver GC Time/s",
-          [ alias(perSecond(summarize("$prefix.$driver.jvm.PS-Scavenge.time")), 'GC time') ],
+          [ 
+            alias(perSecond(summarize("$prefix.$driver.jvm.PS-Scavenge.time")), 'Scavenge GC time') 
+            alias(perSecond(summarize("$prefix.$driver.jvm.PS-MarkSweep.time")), 'MarkSweep GC time') 
+          ],
           {
+            span: 3,
             nullPointMode: 'connected',
             pointradius: 1
           }
-    ),
-    executorBlockMemeoryPanel("$driver")
+    )
   ]
 };
 
@@ -651,7 +674,12 @@ var streaming_row = {
                 alias: "Schedule Delay",
                 yaxis: 2
               }
-            ]
+            ],
+            y_formats: [
+                "s",
+                "ms"
+            ],
+            leftYAxisLabel: "Batch Duration"
           }
     ),
     panel(
@@ -839,11 +867,11 @@ var carbon_row = {
 
 // The dashboard, with its rows.
 dashboard.rows = [
-  executor_row,
-  threadpool_row,
   driver_row,
-  hdfs_row,
+  threadpool_row,
   streaming_row,
+  executor_row,
+  hdfs_row,
   executor_memory,
   carbon_row
 ];
