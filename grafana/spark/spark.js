@@ -693,10 +693,23 @@ var driver_row = {
   collapse: false,
   panels: [
     panel(
-          "Driver scavenge GC per second",
+          "Driver scavenge GC per minute",
           [
-            alias(perSecond("$prefix.$driver.jvm.PS-Scavenge.count"), 'GC Count'),
-            alias(perSecond( "$prefix.$driver.jvm.PS-Scavenge.time"), 'GC time')
+            alias(nonNegativeDerivative(
+                       summarize(
+                              "$prefix.$driver.jvm.PS-Scavenge.count",
+                              '1m',
+                              'max'
+                        )
+                  ), 'GC Count'),
+            alias(nonNegativeDerivative(
+                        summarize(
+                              "$prefix.$driver.jvm.PS-Scavenge.time",
+                              '1m',
+                              'max'
+                        )
+                  ), 'GC time')
+            
           ],
           {
             span: 3,
@@ -715,10 +728,22 @@ var driver_row = {
           }
     ),
     panel(
-          "Driver MarkSweep GC per second",
+          "Driver MarkSweep GC per minute",
           [
-            alias(perSecond("$prefix.$driver.jvm.PS-MarkSweep.count"), 'GC Count'),
-            alias(perSecond("$prefix.$driver.jvm.PS-MarkSweep.time"), 'GC time')
+            alias(nonNegativeDerivative(
+                       summarize(
+                              "$prefix.$driver.jvm.PS-MarkSweep.count",
+                              '1m',
+                              'max'
+                        )
+                  ), 'GC Count'),
+            alias(nonNegativeDerivative(
+                        summarize(
+                              "$prefix.$driver.jvm.PS-MarkSweep.time",
+                              '1m',
+                              'max'
+                        )
+                  ), 'GC time')
           ],
           {
             span: 3,
