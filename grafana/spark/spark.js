@@ -448,10 +448,10 @@ function executorGCSummaryPanel(id, opts) {
           }
           );
   return panel(
-        id + ": GC Time/minute",
+        id + ": GC Time/second",
         [
-            alias(summarize(perSecond("$prefix." + id + ".jvm.PS-Scavenge.time"), "1m", "sum"), 'Scavenge GC time'),
-            alias(summarize(perSecond("$prefix." + id + ".jvm.PS-MarkSweep.time"), "1m", "sum"), 'MarkSweep GC time')
+            alias(perSecond("$prefix." + id + ".jvm.PS-Scavenge.time"), 'Scavenge GC time'),
+            alias(perSecond( "$prefix." + id + ".jvm.PS-MarkSweep.time"), 'MarkSweep GC time')
         ],
         opts
   );
@@ -656,10 +656,10 @@ var driver_row = {
   collapse: false,
   panels: [
     panel(
-          "Driver scavenge GC per minute",
+          "Driver scavenge GC per second",
           [
-            alias(summarize(perSecond("$prefix.$driver.jvm.PS-Scavenge.count"),"1m", "sum"), 'GC Count'),
-            alias(summarize(perSecond("$prefix.$driver.jvm.PS-Scavenge.time"), "1m", "sum"), 'GC time')
+            alias(perSecond("$prefix.$driver.jvm.PS-Scavenge.count"), 'GC Count'),
+            alias(perSecond( "$prefix.$driver.jvm.PS-Scavenge.time"), 'GC time')
           ],
           {
             span: 3,
@@ -678,10 +678,10 @@ var driver_row = {
           }
     ),
     panel(
-          "Driver MarkSweep GC per minute",
+          "Driver MarkSweep GC per second",
           [
-            alias(summarize(perSecond("$prefix.$driver.jvm.PS-MarkSweep.count"),"1m", "sum"), 'GC Count'),
-            alias(summarize(perSecond("$prefix.$driver.jvm.PS-MarkSweep.time"),"1m", "sum"), 'GC time')
+            alias(perSecond("$prefix.$driver.jvm.PS-MarkSweep.count"), 'GC Count'),
+            alias(perSecond("$prefix.$driver.jvm.PS-MarkSweep.time"), 'GC time')
           ],
           {
             span: 3,
