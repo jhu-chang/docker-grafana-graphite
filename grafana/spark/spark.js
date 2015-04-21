@@ -94,7 +94,6 @@ function getTo() {
 
 function getYarnAppInfo() {
   if (_.isUndefined(ARGS.app) && _.isUndefined(ARGS.prefix)) {
-      localMode = true;
       var from = getFrom();
       var to = getTo();
       var now = (to == 'now');
@@ -129,7 +128,9 @@ function getYarnAppInfo() {
 }
 
 var app = getYarnAppInfo();
-if (localMode) {
+var localConstant = "local_";
+if (app.prefix.substring(0, localConstant.length) === localConstant) {
+    localMode = true;
     maxExecutorId = 0;
 }
 
