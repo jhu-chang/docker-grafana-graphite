@@ -537,6 +537,42 @@ var dashboard = {
   title: app.prefix,
   rows: [],
   style: "dark",
+  nav: [
+    {
+      type: "timepicker",
+      collapse: false,
+      notice: false,
+      enable: true,
+      status: "Stable",
+      time_options: [
+        "5m",
+        "15m",
+        "1h",
+        "2h",
+        "3h",
+        "4h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      refresh_intervals: [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      now: true
+    }
+  ],  
   time: {
     from: app.from,
     to: app.to,
@@ -549,7 +585,8 @@ var dashboard = {
       executorRangeTemplateVar,
       driverTemplateVar
     ]
-  }
+  },
+  refresh: "10s"
 };
 
 if (app.now) {
