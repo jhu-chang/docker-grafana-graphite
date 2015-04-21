@@ -1000,15 +1000,24 @@ var carbon_row = {
 
 
 // The dashboard, with its rows.
-dashboard.rows = [
-  driver_row,
-  threadpool_row,
-  streaming_row,
-  executor_row,
-  hdfs_row,
-  executor_memory,
-  carbon_row
-];
+if (!localMode) {
+    dashboard.rows = [
+      driver_row,
+      threadpool_row,
+      streaming_row,
+      executor_row,
+      hdfs_row,
+      executor_memory,
+      carbon_row
+    ];
+} else {
+    dashboard.rows = [
+      driver_row,
+      threadpool_row,
+      streaming_row,
+      executor_memory
+    ];
+}
 
 console.log("Returning: %O", dashboard);
 
