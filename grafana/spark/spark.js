@@ -357,6 +357,7 @@ function summarize(target, interval, fn) {
 function nonNegativeDerivative(target) { return "nonNegativeDerivative(" + target + ")"; }
 function perSecond(target) { return "perSecond(" + target + ")"; }
 function sumSeries(target) { return "sumSeries(" + target + ")"; }
+function curretAbove(target) { return "currentAbove(" + target + ")"; }
 function prefix(target, range) { 
     if (!localMode)
         return "$prefix." + (range || '$executorRange') + ".executor." + target; 
@@ -415,14 +416,14 @@ function executorJvmPanel(id, opts) {
         [
           aliasSub(
                 aliasSub(
-                      "$prefix." + id + ".jvm.pools.*.usage",
+                      curretAbove("$prefix." + id + ".jvm.pools.*.usage"),
                       "^.*\\.([^.]*)\\.usage.*"
                 ),
                 "(PS-)?(-Space)?-?",
                 ""
           ),
           aliasSub(
-                "$prefix." + id + ".jvm.{non-heap,heap}.usage",
+                curretAbove("$prefix." + id + ".jvm.{non-heap,heap}.usage"),
                 ".*\\.((non-)?heap)\\..*"
           )
         ],
