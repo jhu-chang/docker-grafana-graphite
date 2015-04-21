@@ -18,7 +18,7 @@ function getIntParam(i, def) {
   return parseInt(i);
 }
 
-var maxExecutorId = getIntParam(ARGS.maxExecutorId, 20);
+var maxExecutorId = getIntParam(ARGS.maxExecutorId, 10);
 
 var now = false;
 var collapseExecutors = getBoolParam(ARGS.collapseExecutors, true);
@@ -94,7 +94,17 @@ function getTo() {
 
 function getYarnAppInfo() {
   if (_.isUndefined(ARGS.app) && _.isUndefined(ARGS.prefix)) {
-    throw new Error("'app' xor 'name' URL parameter required");
+      localMode = true;
+      var from = getFrom();
+      var to = getTo();
+      var now = (to == 'now');
+      return {
+        prefix: "local_*",
+        now: now,
+        from: from,
+        to: to
+     };
+    //throw new Error("'app' xor 'name' URL parameter required");
   }
   if (!_.isUndefined(ARGS.app)) {
     var app = findYarnApp(ARGS.app);
@@ -119,6 +129,9 @@ function getYarnAppInfo() {
 }
 
 var app = getYarnAppInfo();
+if (localMode) {
+    maxExecutorId = 0;
+}
 
 // Return the maximal common prefix of two strings.
 function getSharedPrefix(minStr, maxStr) {
@@ -416,6 +429,35 @@ function executorJvmPanel(id, opts) {
   );
 }
 
+function executorGCSummaryPanel(id, opts) {
+  opts = opts || {};
+  opts = merge(opts, 
+          {
+            nullPointMode: 'connected',
+            pointradius: 1,
+            stack = true,
+            fill = 10,
+            tooltip: {
+                value_type: "individual"
+            },
+            y_formats: [
+                "ms",
+                "none"
+            ]
+          }
+          );
+  return panel(
+        id + ": GC Time/minute",
+        [
+            alias(summarize(perSecond("$prefix." + id + ".jvm.PS-Scavenge.time"), "1m", "sum"), 'Scavenge GC time'),
+            alias(summarize(perSecond("$prefix." + id + ".jvm.PS-MarkSweep.time"), "1m", "sum"), 'MarkSweep GC time')
+        ],
+        opts
+  );
+}
+
+
+
 function executorBlockMemeoryPanel(id, opts) {
   opts = opts || {};
   opts.nullPointMode = 'connected';
@@ -423,6 +465,7 @@ function executorBlockMemeoryPanel(id, opts) {
   opts.fill = 10;
   opts.y_formats=["none", "short"];
   opts.leftYAxisLabel = "Memory (MB)";
+  opts.tooltip.value_type="individual";
   return panel(
         id + ": Block Manager Status",
         [
@@ -531,12 +574,14 @@ if (executorRanges.length) {
   executorRanges.forEach(function(executorRange) {
     for (var executorId = executorRange.from; executorId <= executorRange.to; ++executorId) {
       executor_row.panels.push(executorJvmPanel(executorId, { span: 3, legend: legend(executorLegends) }));
+      executor_row.panels.push(executorGCSummaryPanel(executorId, { span: 3}));
       executor_memory.panels.push(executorBlockMemeoryPanel(executorId, { span: 3, legend: legend(executorLegends) }));
     }
   });
 } else {
   for (var executorId = 1; executorId <= maxExecutorId; ++executorId) {
     executor_row.panels.push(executorJvmPanel(executorId, { span: 3 }));
+    executor_row.panels.push(executorGCSummaryPanel(executorId, { span: 3}));
     executor_memory.panels.push(executorBlockMemeoryPanel(executorId, { span: 3 }));
   }
 }
@@ -606,10 +651,10 @@ var driver_row = {
   collapse: false,
   panels: [
     panel(
-          "Driver scavenge GC",
+          "Driver scavenge GC per minute",
           [
-            alias("$prefix.$driver.jvm.PS-Scavenge.count", "GC count"),
-            alias("$prefix.$driver.jvm.PS-Scavenge.time", "GC time")
+            alias(summarize(perSecond("$prefix.$driver.jvm.PS-Scavenge.count"),"1m", "sum"), 'GC Count'),
+            alias(summarize(perSecond("$prefix.$driver.jvm.PS-Scavenge.time"), "1m", "sum"), 'GC time')
           ],
           {
             span: 3,
@@ -619,14 +664,19 @@ var driver_row = {
                 alias: "GC time",
                 yaxis: 2
               }
-            ]
+            ],
+            y_formats: [
+                "short",
+                "ms"
+            ],
+            leftYAxisLabel: "GC Count"
           }
     ),
     panel(
-          "Driver MarkSweep GC",
+          "Driver MarkSweep GC per minute",
           [
-            alias("$prefix.$driver.jvm.PS-MarkSweep.count", "GC count"),
-            alias("$prefix.$driver.jvm.PS-MarkSweep.time", "GC time")
+            alias(summarize(perSecond("$prefix.$driver.jvm.PS-MarkSweep.count"),"1m", "sum"), 'GC Count'),
+            alias(summarize(perSecond("$prefix.$driver.jvm.PS-MarkSweep.time"),"1m", "sum"), 'GC time')
           ],
           {
             span: 3,
@@ -636,22 +686,16 @@ var driver_row = {
                 alias: "GC time",
                 yaxis: 2
               }
-            ]
+            ],
+            y_formats: [
+                "short",
+                "ms"
+            ],
+            leftYAxisLabel: "GC Count"
           }
     ),
     executorJvmPanel("$driver", {span: 3}),
-    panel(
-          "Driver GC Time/s",
-          [ 
-            alias(perSecond(summarize("$prefix.$driver.jvm.PS-Scavenge.time")), 'Scavenge GC time'),
-            alias(perSecond(summarize("$prefix.$driver.jvm.PS-MarkSweep.time")), 'MarkSweep GC time') 
-          ],
-          {
-            span: 3,
-            nullPointMode: 'connected',
-            pointradius: 1
-          }
-    )
+    executorGCSummaryPanel("$driver", {span: 3})
   ]
 };
 
