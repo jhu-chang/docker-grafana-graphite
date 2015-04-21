@@ -458,7 +458,6 @@ function executorGCSummaryPanel(id, opts) {
 }
 
 
-
 function executorBlockMemeoryPanel(id, opts) {
   opts = opts || {};
   opts = merge(opts, {
@@ -476,6 +475,28 @@ function executorBlockMemeoryPanel(id, opts) {
         [
           alias("$prefix." + id + ".BlockManager.memory.memUsed_MB","Used Memory"),
           alias("$prefix." + id + ".BlockManager.memory.remainingMem_MB", "Remaining Memory")
+        ],
+        opts
+  );
+}
+
+function executorBlockMemeorySummary(opts) {
+  opts = opts || {};
+  opts = merge(opts, {
+        nullPointMode: 'connected',
+        stack: true,
+        fill: 10,
+        y_formats: ["none", "short"],
+        tooltip: {
+           value_type : "individual"
+        },
+        leftYAxisLabel: "Memory (MB)"
+  });
+  return panel(
+         "Block Manager Status Summary",
+        [
+          alias(sumSeries("$prefix.*.BlockManager.memory.memUsed_MB"),"Total Used Memory"),
+          alias(sumSeries("$prefix.*.BlockManager.memory.remainingMem_MB"), "Total Remaining Memory")
         ],
         opts
   );
@@ -607,7 +628,9 @@ var executor_memory = {
   height: "300px",
   editable: true,
   collapse: collapseExecutors,
-  panels: [executorBlockMemeoryPanel("$driver")]
+  panels: [
+      executorBlockMemeorySummary(),
+      executorBlockMemeoryPanel("$driver")]
 }
 
 // Add panels to the executor row based on the "executors" query
