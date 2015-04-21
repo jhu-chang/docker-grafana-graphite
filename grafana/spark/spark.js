@@ -461,12 +461,16 @@ function executorGCSummaryPanel(id, opts) {
 
 function executorBlockMemeoryPanel(id, opts) {
   opts = opts || {};
-  opts.nullPointMode = 'connected';
-  opts.stack = true;
-  opts.fill = 10;
-  opts.y_formats=["none", "short"];
-  opts.leftYAxisLabel = "Memory (MB)";
-  opts.tooltip.value_type="individual";
+  opts = merge(opts, {
+        nullPointMode: 'connected',
+        stack: true,
+        fill: 10,
+        y_formats: ["none", "short"],
+        tooltip: {
+           value_type : "individual"
+        },
+        leftYAxisLabel: "Memory (MB)"
+  });
   return panel(
         id + ": Block Manager Status",
         [
