@@ -357,7 +357,7 @@ function summarize(target, interval, fn) {
 function nonNegativeDerivative(target) { return "nonNegativeDerivative(" + target + ")"; }
 function perSecond(target) { return "perSecond(" + target + ")"; }
 function sumSeries(target) { return "sumSeries(" + target + ")"; }
-function curretAbove(target) { return "currentAbove(" + target + ")"; }
+function curretAbove(target, n) { return "currentAbove(" + target + ","+ n + ")"; }
 function prefix(target, range) { 
     if (!localMode)
         return "$prefix." + (range || '$executorRange') + ".executor." + target; 
@@ -416,14 +416,14 @@ function executorJvmPanel(id, opts) {
         [
           aliasSub(
                 aliasSub(
-                      curretAbove("$prefix." + id + ".jvm.pools.*.usage"),
+                      curretAbove("$prefix." + id + ".jvm.pools.*.usage", 0),
                       "^.*\\.([^.]*)\\.usage.*"
                 ),
                 "(PS-)?(-Space)?-?",
                 ""
           ),
           aliasSub(
-                curretAbove("$prefix." + id + ".jvm.{non-heap,heap}.usage"),
+                curretAbove("$prefix." + id + ".jvm.{non-heap,heap}.usage", 0),
                 ".*\\.((non-)?heap)\\..*"
           )
         ],
