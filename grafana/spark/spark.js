@@ -411,19 +411,21 @@ function panel(title, targets, opts, showLegend) {
 function executorJvmPanel(id, opts) {
   opts = opts || {};
   opts.nullPointMode = 'connected';
+  opts.y_formats = ["percent","none"];
+  
   return panel(
         id + ": GC tiers / generations",
         [
           aliasSub(
                 aliasSub(
-                      curretAbove("$prefix." + id + ".jvm.pools.*.usage", 0),
+                      scale(curretAbove("$prefix." + id + ".jvm.pools.*.usage", 0), 100),
                       "^.*\\.([^.]*)\\.usage.*"
                 ),
                 "(PS-)?(-Space)?-?",
                 ""
           ),
           aliasSub(
-                curretAbove("$prefix." + id + ".jvm.{non-heap,heap}.usage", 0),
+                scale(curretAbove("$prefix." + id + ".jvm.{non-heap,heap}.usage", 0), 100),
                 ".*\\.((non-)?heap)\\..*"
           )
         ],
