@@ -436,8 +436,8 @@ function executorGCSummaryPanel(id, opts) {
           {
             nullPointMode: 'connected',
             pointradius: 1,
-            stack = true,
-            fill = 10,
+            stack: true,
+            fill: 10,
             tooltip: {
                 value_type: "individual"
             },
