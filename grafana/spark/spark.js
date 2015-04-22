@@ -738,7 +738,7 @@ var driver_row = {
             
           ],
           {
-            span: 3,
+            span: 6,
             nullPointMode: 'connected',
             seriesOverrides: [
               {
@@ -772,7 +772,7 @@ var driver_row = {
                   ), 'GC time')
           ],
           {
-            span: 3,
+            span: 6,
             nullPointMode: 'connected',
             seriesOverrides: [
               {
@@ -787,8 +787,8 @@ var driver_row = {
             leftYAxisLabel: "GC Count"
           }
     ),
-    executorJvmPanel("$driver", {span: 3}),
-    executorGCSummaryPanel("$driver", {span: 3})
+    executorJvmPanel("$driver", {span: 6}),
+    executorGCSummaryPanel("$driver", {span: 6})
   ]
 };
 
@@ -805,6 +805,7 @@ var streaming_row = {
             alias("$prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_schedulingDelay", "Schedule Delay")
           ],
           {
+            span: 4,
             nullPointMode: 'connected',
             seriesOverrides: [
               {
@@ -820,23 +821,42 @@ var streaming_row = {
           }
     ),
     panel(
-          "Waiting batches",
-          [ alias("$prefix.$driver.*.StreamingMetrics.streaming.waitingBatches", 'Waiting Batches') ],
-          {
-            nullPointMode: 'connected',
-            pointradius: 1
-          }
-    ),
-    panel(
-          "Complete Batches per minute",
-          [ alias(nonNegativeDerivative(
+          "Batch Statistics",
+          [ 
+            alias(nonNegativeDerivative(
                         summarize(
                               "$prefix.$driver.*.StreamingMetrics.streaming.totalCompletedBatches",
                               '1m',
                               'max'
                         )
-                  ), 'Complete Batch Per Minute') ],
+                  ), 'Complete Batch Per Minute')
+            alias(summarize(
+                    "$prefix.$driver.*.StreamingMetrics.streaming.waitingBatches",
+                    "1m",
+                    "sum"
+                    ), 'Waiting Batches per minute')
+          ],
           {
+            span: 4,
+            nullPointMode: 'connected',
+            seriesOverrides: [
+              {
+                alias: "Waiting Batches per minute",
+                yaxis: 2
+              }
+            ],
+            y_formats: [
+                "short",
+                "short"
+            ],
+            pointradius: 1
+          }
+    ),
+    panel(
+          "Input Statistics",
+          [ alias(perSecond("$prefix.$driver.*.StreamingMetrics.streaming.totalReceivedRecords"), "Event Rate") ],
+          {
+            span: 4,
             nullPointMode: 'connected',
             pointradius: 1
           }
@@ -1016,8 +1036,8 @@ if (!localMode) {
 } else {
     dashboard.rows = [
       driver_row,
-      threadpool_row,
       streaming_row,
+      threadpool_row,
       executor_memory
     ];
 }
