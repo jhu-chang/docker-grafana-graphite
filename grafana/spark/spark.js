@@ -849,7 +849,8 @@ var streaming_row = {
                 "short",
                 "short"
             ],
-            pointradius: 1
+            pointradius: 1,
+            leftYAxisLabel: "Complete Batch Per Minute"
           }
     ),
     panel(
