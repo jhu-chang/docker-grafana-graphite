@@ -838,7 +838,7 @@ var streaming_row = {
           ],
           {
             span: 4,
-            nullPointMode: 'connected',
+            nullPointMode: 'null',
             seriesOverrides: [
               {
                 alias: "Waiting Batches per minute",
