@@ -98,7 +98,7 @@ function getYarnAppInfo() {
       var to = getTo();
       var now = (to == 'now');
       return {
-        prefix: "local_*",
+        prefix: "local-*",
         now: now,
         from: from,
         to: to
@@ -128,7 +128,7 @@ function getYarnAppInfo() {
 }
 
 var app = getYarnAppInfo();
-var localConstant = "local_";
+var localConstant = "local-";
 if (app.prefix.substring(0, localConstant.length) === localConstant) {
     localMode = true;
     maxExecutorId = 0;
