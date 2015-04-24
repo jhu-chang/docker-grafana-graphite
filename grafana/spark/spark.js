@@ -740,9 +740,6 @@ var driver_row = {
           {
             span: 6,
             nullPointMode: 'connected',
-            tooltip: {
-              value_type: "individual"
-            },
             seriesOverrides: [
               {
                 alias: "GC time",
@@ -777,9 +774,6 @@ var driver_row = {
           {
             span: 6,
             nullPointMode: 'connected',
-            tooltip: {
-              value_type: "individual"
-            },
             seriesOverrides: [
               {
                 alias: "GC time",
@@ -846,7 +840,7 @@ var streaming_row = {
             span: 4,
             nullPointMode: 'connected',
             tooltip: {
-              value_type: "individual"
+              shared: false
             },
             seriesOverrides: [
               {
