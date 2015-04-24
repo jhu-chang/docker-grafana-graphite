@@ -685,7 +685,7 @@ var threadpool_row = {
           {
             stack: true,
             fill: 10,
-            nullPointMode: 'null as zero',
+            nullPointMode: 'connected',
             tooltip: {
               value_type: "individual"
             }
@@ -740,6 +740,9 @@ var driver_row = {
           {
             span: 6,
             nullPointMode: 'connected',
+            tooltip: {
+              value_type: "individual"
+            },
             seriesOverrides: [
               {
                 alias: "GC time",
@@ -774,6 +777,9 @@ var driver_row = {
           {
             span: 6,
             nullPointMode: 'connected',
+            tooltip: {
+              value_type: "individual"
+            },
             seriesOverrides: [
               {
                 alias: "GC time",
@@ -838,7 +844,10 @@ var streaming_row = {
           ],
           {
             span: 4,
-            nullPointMode: 'null',
+            nullPointMode: 'connected',
+            tooltip: {
+              value_type: "individual"
+            },
             seriesOverrides: [
               {
                 alias: "Waiting Batches per minute",
