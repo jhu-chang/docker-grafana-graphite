@@ -351,19 +351,19 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-user.mean_99, 'User')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.user.mean_99, 'User')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-system.mean_99, 'System')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.system.mean_99, 'System')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-idle.mean_99, 'Idle')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.idle.mean_99, 'Idle')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-stolen.mean_99, 'Stolen')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.stolen.mean_99, 'Stolen')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-wait.mean_99, 'Wait')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.wait.mean_99, 'Wait')"
             }
           ],
           "aliasColors": {
@@ -426,10 +426,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.process-user-cpu.upper, 'max'), 'User')"
+              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.cpu-percentage.upper, 'max'), 'User')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.process-system-cpu.upper, 'max'), 'System')"
+              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.total-process-time.upper, 'max'), 'System')"
             }
           ],
           "aliasColors": {
@@ -502,10 +502,10 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-used.upper, 'Used Memory')"
+              "target": "alias(stats.timers.$Application.$Host.*.memory.used.upper, 'Used Memory')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-cache-and-buffer.upper, 'Cache and Buffers')"
+              "target": "alias(stats.timers.$Application.$Host.*.memory.buffer.upper, 'Cache and Buffers')"
             },
             {
               "target": "alias(stats.timers.$Application.$Host.*.memory.memory-total.upper, 'Total Memory')"
