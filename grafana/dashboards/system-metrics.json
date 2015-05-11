@@ -87,10 +87,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.network.rx-bytes.sum, 'sum'), 'Received')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.network.rx-bytes.sum, 'sum'), 'Received')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.network.tx-bytes.sum, 'sum'), 'Transmitted')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.network.tx-bytes.sum, 'sum'), 'Transmitted')"
             }
           ],
           "aliasColors": {
@@ -112,7 +112,7 @@
           "interval": null,
           "targets": [
             {
-              "target": "consolidateBy(stats.timers.$Application.$Host.system-metric.network.rx-errors.sum, 'sum')"
+              "target": "consolidateBy(stats.timers.$Application.$Host.*.network.rx-errors.sum, 'sum')"
             }
           ],
           "cacheTimeout": null,
@@ -159,7 +159,7 @@
           "interval": null,
           "targets": [
             {
-              "target": "consolidateBy(stats.timers.$Application.$Host.system-metric.network.rx-dropped.sum, 'sum')"
+              "target": "consolidateBy(stats.timers.$Application.$Host.*.network.rx-dropped.sum, 'sum')"
             }
           ],
           "cacheTimeout": null,
@@ -206,7 +206,7 @@
           "interval": null,
           "targets": [
             {
-              "target": "consolidateBy(stats.timers.$Application.$Host.system-metric.network.tx-errors.sum, 'sum')"
+              "target": "consolidateBy(stats.timers.$Application.$Host.*.network.tx-errors.sum, 'sum')"
             }
           ],
           "cacheTimeout": null,
@@ -253,7 +253,7 @@
           "interval": null,
           "targets": [
             {
-              "target": "consolidateBy(stats.timers.$Application.$Host.system-metric.network.tx-dropped.sum, 'sum')"
+              "target": "consolidateBy(stats.timers.$Application.$Host.*.network.tx-dropped.sum, 'sum')"
             }
           ],
           "cacheTimeout": null,
@@ -351,19 +351,19 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.cpu.cpu-user.mean_99, 'User')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-user.mean_99, 'User')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.cpu.cpu-system.mean_99, 'System')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-system.mean_99, 'System')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.cpu.cpu-idle.mean_99, 'Idle')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-idle.mean_99, 'Idle')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.cpu.cpu-stolen.mean_99, 'Stolen')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-stolen.mean_99, 'Stolen')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.cpu.cpu-wait.mean_99, 'Wait')"
+              "target": "alias(stats.timers.$Application.$Host.*.cpu.cpu-wait.mean_99, 'Wait')"
             }
           ],
           "aliasColors": {
@@ -426,10 +426,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.system-metric.process-cpu.process-user-cpu.upper, 'max'), 'User')"
+              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.process-user-cpu.upper, 'max'), 'User')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.system-metric.process-cpu.process-system-cpu.upper, 'max'), 'System')"
+              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.process-system-cpu.upper, 'max'), 'System')"
             }
           ],
           "aliasColors": {
@@ -502,13 +502,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.memory.memory-used.upper, 'Used Memory')"
+              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-used.upper, 'Used Memory')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.memory.memory-cache-and-buffer.upper, 'Cache and Buffers')"
+              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-cache-and-buffer.upper, 'Cache and Buffers')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.memory.memory-total.upper, 'Total Memory')"
+              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-total.upper, 'Total Memory')"
             }
           ],
           "aliasColors": {
@@ -574,10 +574,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.file-system.file-system-reads.sum, 'sum'), 'Reads')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.file-system.file-system-reads.sum, 'sum'), 'Reads')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.file-system.file-system-writes.sum, 'sum'), 'Writes')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.file-system.file-system-writes.sum, 'sum'), 'Writes')"
             }
           ],
           "aliasColors": {
@@ -647,13 +647,13 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.context-switches.context-switches-global.sum, 'sum'), 'Global')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.context-switches.context-switches-global.sum, 'sum'), 'Global')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.context-switches.context-switches-process-voluntary.sum, 'sum'), 'Voluntary for the Application')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.context-switches.context-switches-process-voluntary.sum, 'sum'), 'Voluntary for the Application')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.context-switches.context-switches-process-non-voluntary.sum, 'sum'), 'non-Voluntary for the Application')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.context-switches.context-switches-process-non-voluntary.sum, 'sum'), 'non-Voluntary for the Application')"
             }
           ],
           "aliasColors": {
@@ -715,13 +715,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.load-average.one-minute.mean_99, 'One Minute')"
+              "target": "alias(stats.timers.$Application.$Host.*.load-average.one-minute.mean_99, 'One Minute')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.load-average.five-minutes.mean_99, 'Five Minutes')"
+              "target": "alias(stats.timers.$Application.$Host.*.load-average.five-minutes.mean_99, 'Five Minutes')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.load-average.fifteen-minutes.mean_99, 'Fifteen Minutes')"
+              "target": "alias(stats.timers.$Application.$Host.*.load-average.fifteen-minutes.mean_99, 'Fifteen Minutes')"
             }
           ],
           "aliasColors": {
@@ -811,10 +811,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.ps-scavenge-garbage-collector.garbage-collection-count.sum, 'sum'), 'NewGen Collections')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.ps-scavenge-garbage-collector.garbage-collection-count.sum, 'sum'), 'NewGen Collections')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.ps-marksweep-garbage-collector.garbage-collection-time.sum, 'sum'), 'OldGen Total Time')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.ps-marksweep-garbage-collector.garbage-collection-time.sum, 'sum'), 'OldGen Total Time')"
             }
           ],
           "aliasColors": {
@@ -825,7 +825,7 @@
           },
           "seriesOverrides": [
             {
-              "alias": "stats.timers.kamon.ivantopo-desktop.system-metric.ps-scavenge-garbage-collector.garbage-collection-time.sum",
+              "alias": "stats.timers.kamon.ivantopo-desktop.*.ps-scavenge-garbage-collector.garbage-collection-time.sum",
               "yaxis": 2
             },
             {
@@ -893,10 +893,10 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.ps-marksweep-garbage-collector.garbage-collection-count.sum, 'sum'), 'OldGen Collections')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.ps-marksweep-garbage-collector.garbage-collection-count.sum, 'sum'), 'OldGen Collections')"
             },
             {
-              "target": "alias(consolidateBy(stats.timers.$Application.$Host.system-metric.ps-scavenge-garbage-collector.garbage-collection-count.sum, 'sum'), 'NewGen Collections')"
+              "target": "alias(consolidateBy(stats.timers.$Application.$Host.*.ps-scavenge-garbage-collector.garbage-collection-count.sum, 'sum'), 'NewGen Collections')"
             }
           ],
           "aliasColors": {
@@ -905,7 +905,7 @@
           },
           "seriesOverrides": [
             {
-              "alias": "stats.timers.kamon.ivantopo-desktop.system-metric.ps-scavenge-garbage-collector.garbage-collection-time.sum",
+              "alias": "stats.timers.kamon.ivantopo-desktop.*.ps-scavenge-garbage-collector.garbage-collection-time.sum",
               "yaxis": 2
             },
             {
@@ -979,13 +979,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.heap-memory.heap-max.upper, 'Max Heap')"
+              "target": "alias(stats.timers.$Application.$Host.*.heap-memory.heap-max.upper, 'Max Heap')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.heap-memory.heap-used.upper, 'Used Heap')"
+              "target": "alias(stats.timers.$Application.$Host.*.heap-memory.heap-used.upper, 'Used Heap')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.heap-memory.heap-committed.upper, 'Committed Heap')"
+              "target": "alias(stats.timers.$Application.$Host.*.heap-memory.heap-committed.upper, 'Committed Heap')"
             }
           ],
           "aliasColors": {
@@ -1047,13 +1047,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.non-heap-memory.non-heap-max.upper, 'Max')"
+              "target": "alias(stats.timers.$Application.$Host.*.non-heap-memory.non-heap-max.upper, 'Max')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.non-heap-memory.non-heap-committed.upper, 'Committed')"
+              "target": "alias(stats.timers.$Application.$Host.*.non-heap-memory.non-heap-committed.upper, 'Committed')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.non-heap-memory.non-heap-used.upper, 'Used')"
+              "target": "alias(stats.timers.$Application.$Host.*.non-heap-memory.non-heap-used.upper, 'Used')"
             }
           ],
           "aliasColors": {
@@ -1123,13 +1123,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.threads.thread-count.upper, 'Thread Count')"
+              "target": "alias(stats.timers.$Application.$Host.*.threads.thread-count.upper, 'Thread Count')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.threads.daemon-thread-count.upper, 'Daemon Threads')"
+              "target": "alias(stats.timers.$Application.$Host.*.threads.daemon-thread-count.upper, 'Daemon Threads')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.threads.peak-thread-count.upper, 'Peak')"
+              "target": "alias(stats.timers.$Application.$Host.*.threads.peak-thread-count.upper, 'Peak')"
             }
           ],
           "aliasColors": {
@@ -1191,13 +1191,13 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.class-loading.classes-currently-loaded.upper, 'Currently Loaded Classes')"
+              "target": "alias(stats.timers.$Application.$Host.*.class-loading.classes-currently-loaded.upper, 'Currently Loaded Classes')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.class-loading.classes-loaded.upper, 'Loaded Classes')"
+              "target": "alias(stats.timers.$Application.$Host.*.class-loading.classes-loaded.upper, 'Loaded Classes')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.system-metric.class-loading.classes-unloaded.upper, 'Unloaded Classes')"
+              "target": "alias(stats.timers.$Application.$Host.*.class-loading.classes-unloaded.upper, 'Unloaded Classes')"
             }
           ],
           "aliasColors": {
