@@ -390,9 +390,9 @@
             "short"
           ],
           "grid": {
-            "leftMax": null,
+            "leftMax": 100,
             "rightMax": null,
-            "leftMin": null,
+            "leftMin": 0,
             "rightMin": null,
             "threshold1": null,
             "threshold2": null,
@@ -426,15 +426,11 @@
           },
           "targets": [
             {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.cpu-percentage.upper, 'max'), 'User')"
-            },
-            {
-              "target": "alias(consolidateBy(stats.timers.*.$Host.*.process-cpu.total-process-time.upper, 'max'), 'System')"
+              "target": "alias(scale(consolidateBy(stats.timers.$Application.$Host.*.process-cpu.cpu-percentage.mean_99, 'max'),$NumOfCores), 'User')"
             }
           ],
           "aliasColors": {
-            "User %": "#1F78C1",
-            "System %": "#BF1B00"
+            "User %": "#1F78C1"
           },
           "seriesOverrides": [],
           "links": [],
@@ -475,7 +471,7 @@
             "thresholdLine": false
           },
           "lines": true,
-          "fill": 1,
+          "fill": 10,
           "linewidth": 2,
           "points": false,
           "pointradius": 5,
@@ -502,14 +498,11 @@
           },
           "targets": [
             {
-              "target": "alias(stats.timers.$Application.$Host.*.memory.used.upper, 'Used Memory')"
+              "target": "alias(scale(stats.timers.$Application.$Host.*.memory.used.upper,1048576), 'Used Memory')"
             },
             {
-              "target": "alias(stats.timers.$Application.$Host.*.memory.buffer.upper, 'Cache and Buffers')"
+              "target": "alias(scale(stats.timers.$Application.$Host.*.memory.free.upper,1048576), 'Freed Memory')"
             },
-            {
-              "target": "alias(stats.timers.$Application.$Host.*.memory.memory-total.upper, 'Total Memory')"
-            }
           ],
           "aliasColors": {
             "Total Memory": "#890F02"
@@ -517,7 +510,7 @@
           "seriesOverrides": [
             {
               "alias": "Total Memory",
-              "stack": false
+              "stack":true 
             }
           ],
           "links": []
@@ -1288,6 +1281,43 @@
           "value": "fedora"
         },
         "refresh": true
+      },
+      {
+        "type": "custom",
+        "name": "NumOfCores",
+        "query": "",
+        "options": [
+          {
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "text": "2",
+            "value": "0.5"
+          },
+          {
+            "text": "4",
+            "value": "0.25"
+          },
+          {
+            "text": "8",
+            "value": "0.125"
+          },
+          {
+            "text": "16",
+            "value": "0.0625"
+          },
+          {
+            "text": "32",
+            "value": "0.03125"
+          }
+        ],
+        "current": {
+          "text": "4",
+          "value": "0.25"
+        },
+        "datasource": null,
+        "allFormat": "glob"
       }
     ],
     "enable": true
