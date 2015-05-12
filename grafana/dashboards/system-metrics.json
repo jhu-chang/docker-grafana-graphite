@@ -502,7 +502,7 @@
             },
             {
               "target": "alias(scale(stats.timers.$Application.$Host.*.memory.free.upper,1048576), 'Freed Memory')"
-            },
+            }
           ],
           "aliasColors": {
             "Total Memory": "#890F02"
