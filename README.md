@@ -78,6 +78,42 @@ docker run \
    kamon/grafana_graphite
 ```
 
+### How to visit the spark app ###
+The url to spark monitor is http://192.168.99.100/dashboard/script/spark.js
+
+There are several parameters:
+1. **&app=<app id>**
+2. **&prefix=<metric prefix>**
+
+   Pass the full application ID (which is the YARN application ID if you are running Spark on YARN, otherwise the spark.app.id configuration param that your Spark job ran with) here if it is not fetched via the app parameter documented above
+
+3. **&from=YYYYMMDDTHHMMSS, &to=YYYYMMDDTHHMMSS**
+
+   These will be inferred from the YARN application if the app param is used, otherwise they should be set manually; defaults are `now-1h` and `now`.
+
+4. **&maxExecutorId=<N>**
+
+   ell spark.js how many per-executor graphs to draw, and how to initialize some sane values of the `$executorRange`
+
+5. **&collapseExecutors=<bool>**
+
+   Collapse the top row containing per-executor JVM statistics, which can commonly be quite large and take up many folds of screen-height.
+
+   Default: `true`
+
+6. **&executors=<ranges>**
+
+   Comma-delimited list of dash-delimited pairs of integers denoting specific executors to show.
+
+   All ranges passed here, as well as their union, will be added as options to the `$executorRange` template variable.
+
+   Example: `1-12`,`22-23`.
+
+7. **&sharedTooltip=<bool>**
+8. **&executorLegends=<bool>**
+9. **&legends=<bool>**
+10. **&percentilesAndTotals=<bool>**
+
 ### Now go explore! ###
 
 We hope that you have a lot of fun with this image and that it serves it's

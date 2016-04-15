@@ -45,7 +45,7 @@ RUN     git clone https://github.com/etsy/statsd.git /src/statsd                
 # Install Grafana
 RUN     mkdir /src/grafana                                                                                    &&\
         mkdir /opt/grafana                                                                                    &&\
-        wget https://grafanarel.s3.amazonaws.com/builds/grafana-2.1.3.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
+        wget https://grafanarel.s3.amazonaws.com/builds/grafana-2.6.0.linux-x64.tar.gz -O /src/grafana.tar.gz &&\
         tar -xzf /src/grafana.tar.gz -C /opt/grafana --strip-components=1                                     &&\
         rm /src/grafana.tar.gz
 
@@ -91,7 +91,8 @@ ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure spark dashborads
 #RUN     ln -s /src/spark-dashboards/spark.js /src/grafana/app/dashboards/spark.js 
-ADD     ./grafana/spark/spark.js /src/grafana/app/dashboards/spark.js
+ADD     ./grafana/spark/spark.js /opt/grafana/public/dashboards/spark.js
+ADD     ./grafana/spark/spark-system.js /opt/grafana/public/dashboards/spark-system.js
 
 # ---------------- #
 #   Expose Ports   #

@@ -1,0 +1,1959 @@
+{
+  "id": null,
+  "title": "Spark Dashboards",
+  "originalTitle": "Spark Dashboards",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "title": "",
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "text",
+          "id": 36,
+          "mode": "markdown",
+          "content": "# Spark Dashboards\n\nThe following metrics related to the spark system, it contains\n\n- The [spark][SparkLink] metrics which uses graphite as the sink\n \n- The system metrics which gathering are achieved using [Sigar][SigarLink]\n\n- Details spark dashboard can be accessed [here][DetailLink]\n\n- Details spark system dashboard can be accessed [here][SystemLink]\n\n[SparkLink]: http://spark.apache.org/docs/latest/monitoring.html#metrics \"Spark metrics\"\n[SigarLink]: https://support.hyperic.com/display/SIGAR/Home \"Sigar Home\"\n[DetailLink]: /dashboard/script/spark.js\n[SystemLink]: /dashboard/script/spark-system.js",
+          "style": {},
+          "links": []
+        }
+      ],
+      "title": "Spark Header Row"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "content": "##  Task Metrics\n\n* The following metrics related to tasks of spark \n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text"
+        }
+      ],
+      "title": "Task Header Row"
+    },
+    {
+      "title": "threadpool",
+      "height": "300px",
+      "panels": [
+        {
+          "title": "CPU usage",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub($prefix.*.system.cpu.combined, '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "percentunit",
+            "short"
+          ],
+          "links": [
+             {
+                "type": "dashboard",
+                "dashboard": "Spark System Dashboards",
+                "dashUri": "db/spark-system-dashboards",
+                "title": "Spark System Dashboards",
+                "keepTime": true,
+                "includeVars": true,
+                "targetBlank": true
+            }
+          ],
+          "id": 17,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "Active tasks (stacked per executor)",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.threadpool.activeTasks, '1m', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "stack": true,
+          "fill": 10,
+          "links": [
+            {
+                "type": "dashboard",
+                "dashboard": "Spark System Dashboards",
+                "dashUri": "db/spark-system-dashboards",
+                "title": "Spark System Dashboards",
+                "keepTime": true,
+                "includeVars": true,
+                "targetBlank": true
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "yaxis": 2,
+              "linewidth": 4,
+              "lines": true
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 5,
+              "lines": true
+            }
+          ],
+          "id": 18,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "Completed tasks per executor",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.threadpool.completeTasks, '1m', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "links": [
+            {
+                "type": "dashboard",
+                "dashboard": "Spark System Dashboards",
+                "dashUri": "db/spark-system-dashboards",
+                "title": "Spark System Dashboards",
+                "keepTime": true,
+                "includeVars": true,
+                "targetBlank": true
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "yaxis": 2,
+              "linewidth": 4,
+              "lines": true
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 5,
+              "lines": true
+            }
+          ],
+          "id": 19,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "Completed tasks per minute per executor",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(nonNegativeDerivative(summarize($prefix.$executorRange.executor.threadpool.completeTasks, '1m', 'max', false)), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "pointradius": 1,
+          "points": true,
+          "links": [
+            {
+                "type": "dashboard",
+                "dashboard": "Spark System Dashboards",
+                "dashUri": "db/spark-system-dashboards",
+                "title": "Spark System Dashboards",
+                "keepTime": true,
+                "includeVars": true,
+                "targetBlank": true
+            }
+          ],
+          "id": 20,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        }
+      ],
+      "collapse": false,
+      "editable": true
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "content": "##  Streaming Metrics\n\n* The following metrics related to streaming of spark \n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text"
+        }
+      ],
+      "title": "Streaming Header Row"
+    },
+    {
+      "title": "Streaming Staticscs",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Last Batch trends",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(scale(diffSeries($prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_processingEndTime, $prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime), 0.001), 'Batch Duration')",
+              "refId": "A"
+            },
+            {
+              "target": "alias($prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_schedulingDelay, 'Schedule Delay')",
+              "refId": "B"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "Schedule Delay",
+              "yaxis": 2
+            }
+          ],
+          "y_formats": [
+            "s",
+            "ms"
+          ],
+          "leftYAxisLabel": "Batch Duration",
+          "id": 21,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "Batch Statistics",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": false,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(nonNegativeDerivative(summarize($prefix.$driver.*.StreamingMetrics.streaming.totalCompletedBatches, '1m', 'max', false)), 'Complete Batch Per Minute')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(summarize($prefix.$driver.*.StreamingMetrics.streaming.waitingBatches, '1m', 'sum', false), 'Waiting Batches per minute')",
+              "refId": "B"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "Waiting Batches per minute",
+              "yaxis": 2
+            }
+          ],
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "pointradius": 1,
+          "points": true,
+          "leftYAxisLabel": "Complete Batch Per Minute",
+          "id": 22,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "Input Statistics",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(perSecond($prefix.$driver.*.StreamingMetrics.streaming.totalReceivedRecords), 'Event Rate')",
+              "refId": "A"
+            }
+          ],
+          "pointradius": 1,
+          "points": true,
+          "id": 23,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        }
+      ]
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "content": "##  Block Memory Metrics\n\n* The following metrics related to block memory of spark \n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text"
+        }
+      ],
+      "title": "Block Memory Header Row"
+    },
+    {
+      "title": "Block Manager Summary",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "Block Manager Status Summary",
+          "span": 12,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(sumSeries($prefix.*.BlockManager.memory.memUsed_MB), 'Total Used Memory')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(sumSeries($prefix.*.BlockManager.memory.remainingMem_MB), 'Total Remaining Memory')",
+              "refId": "B"
+            }
+          ],
+          "stack": true,
+          "fill": 10,
+          "y_formats": [
+            "mbytes",
+            "short"
+          ],
+          "leftYAxisLabel": "Memory",
+          "id": 24,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        }
+      ]
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "panels": [
+        {
+          "content": "##  HDFS Metrics\n\n* The following metrics related to HDFS of spark \n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text"
+        }
+      ],
+      "title": "HDFS Header Row"
+    },
+    {
+      "title": "HDFS I/O",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "title": "HDFS reads/s, 10s avgs",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(perSecond(summarize($prefix.$executorRange.executor.filesystem.hdfs.read_ops, '10s', 'avg', false)), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "pointradius": 1,
+          "points": true,
+          "steppedLine": true,
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 25,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS reads/executor",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.filesystem.hdfs.read_ops, '10s', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 26,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS bytes read/s/executor, 10s avgs",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(perSecond(summarize($prefix.$executorRange.executor.filesystem.hdfs.read_bytes, '10s', 'avg', false)), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 27,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS bytes read",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.filesystem.hdfs.read_bytes, '10s', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "yaxis": 2,
+              "linewidth": 4,
+              "lines": true
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 5,
+              "lines": true
+            }
+          ],
+          "id": 28,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS writes/s, 10s avgs",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(perSecond(summarize($prefix.$executorRange.executor.filesystem.hdfs.write_ops, '10s', 'avg', false)), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "pointradius": 1,
+          "points": true,
+          "steppedLine": true,
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 29,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS writes/executor",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.filesystem.hdfs.write_ops, '10s', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 30,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS bytes write/s/executor, 10s avgs",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(perSecond(summarize($prefix.$executorRange.executor.filesystem.hdfs.write_bytes, '10s', 'avg', false)), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "linewidth": 4,
+              "yaxis": 2
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 3
+            }
+          ],
+          "id": 31,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "HDFS bytes write",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(summarize($prefix.$executorRange.executor.filesystem.hdfs.write_bytes, '10s', 'avg', false), '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/total/",
+              "yaxis": 2,
+              "linewidth": 4,
+              "lines": true
+            },
+            {
+              "alias": "/%/",
+              "linewidth": 5,
+              "lines": true
+            }
+          ],
+          "id": 32,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        }
+      ]
+    },
+    {
+      "title": "Carbon row",
+      "height": "250px",
+      "editable": true,
+      "collapse": true,
+      "panels": [
+        {
+          "title": "Carbon Stats - metrics collected, points per update",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true
+          },
+          "targets": [
+            {
+              "target": "alias(carbon.agents.*.metricsReceived, 'metrics recv'd')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(carbon.agents.*.pointsPerUpdate, 'points/update')",
+              "refId": "B"
+            },
+            {
+              "target": "alias(carbon.agents.*.avgUpdateTime, 'updateTime')",
+              "refId": "C"
+            },
+            {
+              "target": "alias(carbon.agents.*.errors, 'errors')",
+              "refId": "D"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "/metrics/",
+              "yaxis": 2
+            }
+          ],
+          "id": 33
+        },
+        {
+          "title": "Carbon Stats - updates, queues",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true
+          },
+          "targets": [
+            {
+              "target": "alias(carbon.agents.*.updateOperations, 'updates')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(carbon.agents.*.cache.queues, 'cache.queues')",
+              "refId": "B"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "updates",
+              "yaxis": 2
+            }
+          ],
+          "id": 34
+        },
+        {
+          "title": "Carbon Stats - mem usage",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "null",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true
+          },
+          "targets": [
+            {
+              "target": "alias(carbon.agents.*.cache.size, 'cache.size')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(carbon.agents.*.memUsage, 'memUsage')",
+              "refId": "B"
+            }
+          ],
+          "y_formats": [
+            "bytes",
+            "bytes"
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "memUsage",
+              "yaxis": 1
+            },
+            {
+              "alias": "cache.size",
+              "yaxis": 2
+            }
+          ],
+          "id": 35
+        }
+      ]
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now",
+    "now": true
+  },
+  "timepicker": {
+    "type": "timepicker",
+    "collapse": false,
+    "notice": false,
+    "enable": true,
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "2h",
+      "3h",
+      "4h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "now": true
+  },
+  "templating": {
+    "enable": true,
+    "list": [
+      {
+        "type": "query",
+        "name": "prefix",
+        "options": [
+           {
+            "text": "None",
+            "value": "",
+            "isNone": true,
+            "selected": true
+          }
+        ],
+        "datasource": "graphite",
+        "query": "*",
+        "refresh": true,
+        "useTags": false,
+        "hideLabel": false,
+        "regex": "/[a-zA-Z]+-\\d+/",
+        "label": "Application",
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "allFormat": "glob",
+        "includeAll": true,
+        "multi": true,
+        "multiFormat": "glob",
+        "current": {
+           "text": "None",
+           "value": "",
+           "isNone": true
+        }
+      },
+      {
+        "type": "custom",
+        "name": "executorRange",
+        "query": "",
+        "options": [
+          {
+            "text": "*",
+            "value": "*"
+          },
+          {
+            "text": "1",
+            "value": "{1}"
+          },
+          {
+            "text": "2",
+            "value": "{2}"
+          },
+          {
+            "text": "3",
+            "value": "{3}"
+          },
+          {
+            "text": "4",
+            "value": "{4}"
+          },
+          {
+            "text": "5",
+            "value": "{5}"
+          },
+          {
+            "text": "6",
+            "value": "{6}"
+          },
+          {
+            "text": "7",
+            "value": "{7}"
+          },
+          {
+            "text": "8",
+            "value": "{8}"
+          },
+          {
+            "text": "9",
+            "value": "{9}"
+          },
+          {
+            "text": "10",
+            "value": "{10}"
+          },
+          {
+            "text": "1-0.1",
+            "value": "{}"
+          },
+          {
+            "text": "1.1-0.2",
+            "value": "{}"
+          },
+          {
+            "text": "1.2-0.30000000000000004",
+            "value": "{}"
+          },
+          {
+            "text": "1.3-0.4",
+            "value": "{}"
+          },
+          {
+            "text": "1.4-0.5",
+            "value": "{}"
+          },
+          {
+            "text": "1.5-0.6000000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "1.6-0.7000000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "1.7000000000000002-0.8",
+            "value": "{}"
+          },
+          {
+            "text": "1.8-0.9",
+            "value": "{}"
+          },
+          {
+            "text": "1.9-1",
+            "value": "{}"
+          },
+          {
+            "text": "2-1.1",
+            "value": "{}"
+          },
+          {
+            "text": "2.1-1.2000000000000002",
+            "value": "{}"
+          },
+          {
+            "text": "2.2-1.3",
+            "value": "{}"
+          },
+          {
+            "text": "2.3-1.4000000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "2.4000000000000004-1.5",
+            "value": "{}"
+          },
+          {
+            "text": "2.5-1.6",
+            "value": "{}"
+          },
+          {
+            "text": "2.6-1.7000000000000002",
+            "value": "{}"
+          },
+          {
+            "text": "2.7-1.8",
+            "value": "{}"
+          },
+          {
+            "text": "2.8-1.9000000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "2.9000000000000004-2",
+            "value": "{}"
+          },
+          {
+            "text": "3-2.1",
+            "value": "{}"
+          },
+          {
+            "text": "3.1-2.2",
+            "value": "{}"
+          },
+          {
+            "text": "3.2-2.3000000000000003",
+            "value": "{}"
+          },
+          {
+            "text": "3.3000000000000003-2.4000000000000004",
+            "value": "{}"
+          },
+          {
+            "text": "3.4000000000000004-2.5",
+            "value": "{}"
+          },
+          {
+            "text": "3.5-2.6",
+            "value": "{}"
+          },
+          {
+            "text": "3.6-2.7",
+            "value": "{}"
+          },
+          {
+            "text": "3.7-2.8000000000000003",
+            "value": "{}"
+          },
+          {
+            "text": "3.8000000000000003-2.9000000000000004",
+            "value": "{}"
+          },
+          {
+            "text": "3.9000000000000004-3",
+            "value": "{}"
+          },
+          {
+            "text": "4-3.1",
+            "value": "{}"
+          },
+          {
+            "text": "4.1-3.2",
+            "value": "{}"
+          },
+          {
+            "text": "4.2-3.3000000000000003",
+            "value": "{}"
+          },
+          {
+            "text": "4.300000000000001-3.4000000000000004",
+            "value": "{}"
+          },
+          {
+            "text": "4.4-3.5",
+            "value": "{}"
+          },
+          {
+            "text": "4.5-3.6",
+            "value": "{}"
+          },
+          {
+            "text": "4.6-3.7",
+            "value": "{}"
+          },
+          {
+            "text": "4.7-3.8000000000000003",
+            "value": "{}"
+          },
+          {
+            "text": "4.800000000000001-3.9000000000000004",
+            "value": "{}"
+          },
+          {
+            "text": "4.9-4",
+            "value": "{}"
+          },
+          {
+            "text": "5-4.1000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "5.1000000000000005-4.2",
+            "value": "{}"
+          },
+          {
+            "text": "5.2-4.3",
+            "value": "{}"
+          },
+          {
+            "text": "5.3-4.4",
+            "value": "{}"
+          },
+          {
+            "text": "5.4-4.5",
+            "value": "{}"
+          },
+          {
+            "text": "5.5-4.6000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "5.6000000000000005-4.7",
+            "value": "{}"
+          },
+          {
+            "text": "5.7-4.800000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "5.800000000000001-4.9",
+            "value": "{}"
+          },
+          {
+            "text": "5.9-5",
+            "value": "{}"
+          },
+          {
+            "text": "6-5.1000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "6.1000000000000005-5.2",
+            "value": "{}"
+          },
+          {
+            "text": "6.2-5.300000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "6.300000000000001-5.4",
+            "value": "{}"
+          },
+          {
+            "text": "6.4-5.5",
+            "value": "{}"
+          },
+          {
+            "text": "6.5-5.6000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "6.6000000000000005-5.7",
+            "value": "{}"
+          },
+          {
+            "text": "6.7-5.800000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "6.800000000000001-5.9",
+            "value": "{}"
+          },
+          {
+            "text": "6.9-6",
+            "value": "{}"
+          },
+          {
+            "text": "7-6.1000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "7.1000000000000005-6.2",
+            "value": "{}"
+          },
+          {
+            "text": "7.2-6.300000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "7.300000000000001-6.4",
+            "value": "{}"
+          },
+          {
+            "text": "7.4-6.5",
+            "value": "{}"
+          },
+          {
+            "text": "7.5-6.6000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "7.6000000000000005-6.7",
+            "value": "{}"
+          },
+          {
+            "text": "7.7-6.800000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "7.800000000000001-6.9",
+            "value": "{}"
+          },
+          {
+            "text": "7.9-7",
+            "value": "{}"
+          },
+          {
+            "text": "8-7.1000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "8.100000000000001-7.2",
+            "value": "{}"
+          },
+          {
+            "text": "8.2-7.300000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "8.3-7.4",
+            "value": "{}"
+          },
+          {
+            "text": "8.4-7.5",
+            "value": "{}"
+          },
+          {
+            "text": "8.5-7.6000000000000005",
+            "value": "{}"
+          },
+          {
+            "text": "8.600000000000001-7.7",
+            "value": "{}"
+          },
+          {
+            "text": "8.7-7.800000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "8.8-7.9",
+            "value": "{}"
+          },
+          {
+            "text": "8.9-8",
+            "value": "{}"
+          },
+          {
+            "text": "9-8.1",
+            "value": "{}"
+          },
+          {
+            "text": "9.1-8.200000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "9.200000000000001-8.3",
+            "value": "{}"
+          },
+          {
+            "text": "9.3-8.4",
+            "value": "{}"
+          },
+          {
+            "text": "9.4-8.5",
+            "value": "{}"
+          },
+          {
+            "text": "9.5-8.6",
+            "value": "{}"
+          },
+          {
+            "text": "9.6-8.700000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "9.700000000000001-8.8",
+            "value": "{}"
+          },
+          {
+            "text": "9.8-8.9",
+            "value": "{}"
+          },
+          {
+            "text": "9.9-9",
+            "value": "{}"
+          },
+          {
+            "text": "10-9.1",
+            "value": "{}"
+          },
+          {
+            "text": "10.1-9.200000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "10.200000000000001-9.3",
+            "value": "{}"
+          },
+          {
+            "text": "10.3-9.4",
+            "value": "{}"
+          },
+          {
+            "text": "10.4-9.5",
+            "value": "{}"
+          },
+          {
+            "text": "10.5-9.600000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "10.600000000000001-9.700000000000001",
+            "value": "{}"
+          },
+          {
+            "text": "10.700000000000001-9.8",
+            "value": "{}"
+          },
+          {
+            "text": "10.8-9.9",
+            "value": "{}"
+          },
+          {
+            "text": "10.9-10",
+            "value": "{}"
+          }
+        ],
+        "includeAll": true,
+        "allFormat": "glob",
+        "current": {
+          "text": "*",
+          "value": "*"
+        },
+        "datasource": null
+      },
+      {
+        "type": "custom",
+        "name": "driver",
+        "query": "",
+        "datasource": "graphite",
+        "options": [
+          {
+            "text": "<driver>",
+            "value": "<driver>"
+          },
+          {
+            "text": "driver",
+            "value": "driver"
+          }
+        ],
+        "current": {
+          "text": "driver",
+          "value": "driver"
+        },
+        "allFormat": "glob"
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": "1m",
+  "schemaVersion": 8,
+  "version": 0,
+  "links": []
+}

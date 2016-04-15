@@ -1,0 +1,898 @@
+{
+  "id": null,
+  "title": "Spark System Dashboards",
+  "originalTitle": "Spark System Dashboards",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "hideControls": false,
+  "sharedCrosshair": false,
+  "rows": [
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "repeat": "executors",
+      "panels": [
+        {
+          "content": "## System Metrics for $executors\n\n* The following metrics related to the host OS (most of the metrics gathering are achieved using [Sigar][SigarLink])\n[SigarLink]: https://support.hyperic.com/display/SIGAR/Home \"Sigar Home\"\n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text",
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          }
+        }
+      ],
+      "title": "System Header Row",
+      "scopedVars": {
+        "executors": {
+          "text": "driver",
+          "value": "driver",
+          "selected": true
+        }
+      }
+    },
+    {
+      "title": "System metrics $executors",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "repeat": "executors",
+      "panels": [
+        {
+          "title": "$executors: CPU Usage",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias($prefix.$executors.system.cpu.combined, 'Total')",
+              "refId": "A"
+            },
+            {
+              "target": "alias($prefix.$executors.system.cpu.user, 'User')",
+              "refId": "B"
+            },
+            {
+              "target": "alias($prefix.$executors.system.cpu.sys, 'Sys')",
+              "refId": "C"
+            },
+            {
+              "target": "alias($prefix.$executors.system.cpu.idle, 'Idle')",
+              "refId": "D"
+            },
+            {
+              "target": "alias($prefix.$executors.system.cpu.wait, 'Wait')",
+              "refId": "E"
+            }
+          ],
+          "y_formats": [
+            "percentunit",
+            "short"
+          ],
+          "grid": {
+            "leftMin": null,
+            "leftMax": null,
+            "leftLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 17,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "$executors: Process CPU Usage",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(sumSeries($prefix.$executors.proc_*.cpu_usage), 'Java Process CPU')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "percentunit",
+            "short"
+          ],
+          "grid": {
+            "leftMin": null,
+            "leftMax": null,
+            "leftLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 18,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "$executors: File System Usage",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(perSecond($prefix.$executors.system.disk_read_bytes), 'Disk Read')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(perSecond($prefix.$executors.system.disk_write_bytes), 'Disk Write')",
+              "refId": "B"
+            }
+          ],
+          "stack": true,
+          "fill": 10,
+          "y_formats": [
+            "Bps",
+            "percent"
+          ],
+          "grid": {
+            "leftMin": 0,
+            "leftMax": null,
+            "leftLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 19,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "lines": true,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "$executors: Network Traffic",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(perSecond(diffSeries($prefix.$executors.system.total_rx_bytes, sumSeries($prefix.$executors.system.lo*_rx_bytes))), 'Network Read')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(perSecond(diffSeries($prefix.$executors.system.total_tx_bytes, sumSeries($prefix.$executors.system.lo*_tx_bytes))), 'Network Write')",
+              "refId": "B"
+            }
+          ],
+          "stack": true,
+          "fill": 10,
+          "y_formats": [
+            "Bps",
+            "percent"
+          ],
+          "grid": {
+            "leftMin": 0,
+            "leftMax": null,
+            "leftLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 20,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "lines": true,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "$executors: Memory Usage",
+          "span": 4,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias($prefix.$executors.system.used_mem, 'System Used CPU')",
+              "refId": "A"
+            },
+            {
+              "target": "alias($prefix.$executors.system.free_mem, 'System Free CPU')",
+              "refId": "B"
+            }
+          ],
+          "stack": true,
+          "fill": 10,
+          "y_formats": [
+            "bytes",
+            "percent"
+          ],
+          "grid": {
+            "leftMin": 0,
+            "leftMax": null,
+            "leftLogBase": 1,
+            "rightMax": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "id": 21,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "lines": true,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        }
+      ],
+      "scopedVars": {
+        "executors": {
+          "text": "driver",
+          "value": "driver",
+          "selected": true
+        }
+      }
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "100px",
+      "repeat": "executors",
+      "panels": [
+        {
+          "content": "##  JVM Metrics for $executors\n\n* The following metrics related to the host Java \n\n",
+          "editable": true,
+          "error": false,
+          "id": 16,
+          "links": [],
+          "mode": "markdown",
+          "span": 12,
+          "style": {},
+          "title": "",
+          "type": "text",
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          }
+        }
+      ],
+      "title": "JVM Header Row",
+      "scopedVars": {
+        "executors": {
+          "text": "driver",
+          "value": "driver",
+          "selected": true
+        }
+      }
+    },
+    {
+      "title": "JVM metrics $executors",
+      "height": "300px",
+      "editable": true,
+      "collapse": false,
+      "repeat": "executors",
+      "panels": [
+        {
+          "title": "$executors: Scavenge GC per minute",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(nonNegativeDerivative(summarize($prefix.$executors.jvm.PS-Scavenge.count, '1m', 'max', false)), 'GC Count')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(nonNegativeDerivative(summarize($prefix.$executors.jvm.PS-Scavenge.time, '1m', 'max', false)), 'GC time')",
+              "refId": "B"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "GC time",
+              "yaxis": 2
+            }
+          ],
+          "y_formats": [
+            "short",
+            "ms"
+          ],
+          "leftYAxisLabel": "GC Count",
+          "id": 22,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "$executors: MarkSweep GC per minute",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(nonNegativeDerivative(summarize($prefix.$executors.jvm.PS-MarkSweep.count, '1m', 'max', false)), 'GC Count')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(nonNegativeDerivative(summarize($prefix.$executors.jvm.PS-MarkSweep.time, '1m', 'max', false)), 'GC time')",
+              "refId": "B"
+            }
+          ],
+          "seriesOverrides": [
+            {
+              "alias": "GC time",
+              "yaxis": 2
+            }
+          ],
+          "y_formats": [
+            "short",
+            "ms"
+          ],
+          "leftYAxisLabel": "GC Count",
+          "id": 23,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {}
+        },
+        {
+          "title": "$executors: GC tiers / generations",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub(aliasSub(scale(currentAbove($prefix.$executors.jvm.pools.*.usage,0), 100), '^.*\\.([^.]*)\\.usage.*', '\\1'), '(PS-)?(-Space)?-?', '')",
+              "refId": "A"
+            },
+            {
+              "target": "aliasSub(scale(currentAbove($prefix.$executors.jvm.{non-heap,heap}.usage,0), 100), '.*\\.((non-)?heap)\\..*', '\\1')",
+              "refId": "B"
+            }
+          ],
+          "y_formats": [
+            "percent",
+            "none"
+          ],
+          "id": 24,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "$executors: GC Time/second",
+          "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "individual"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "alias(perSecond($prefix.$executors.jvm.PS-Scavenge.time), 'Scavenge GC time')",
+              "refId": "A"
+            },
+            {
+              "target": "alias(perSecond($prefix.$executors.jvm.PS-MarkSweep.time), 'MarkSweep GC time')",
+              "refId": "B"
+            }
+          ],
+          "pointradius": 1,
+          "points": true,
+          "stack": true,
+          "fill": 10,
+          "y_formats": [
+            "ms",
+            "none"
+          ],
+          "id": 25,
+          "scopedVars": {
+            "executors": {
+              "text": "driver",
+              "value": "driver",
+              "selected": true
+            }
+          },
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "linewidth": 2,
+          "bars": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        }
+      ],
+      "scopedVars": {
+        "executors": {
+          "text": "driver",
+          "value": "driver",
+          "selected": true
+        }
+      }
+    }
+  ],
+  "time": {
+    "from": "2016-04-01T02:54:29.000Z",
+    "to": "2016-04-01T08:06:27.000Z",
+    "now": "now"
+  },
+  "timepicker": {
+    "type": "timepicker",
+    "collapse": false,
+    "notice": false,
+    "enable": true,
+    "status": "Stable",
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "2h",
+      "3h",
+      "4h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "now": true
+  },
+  "templating": {
+    "enable": true,
+    "list": [
+      {
+        "type": "query",
+        "name": "prefix",
+        "options": [
+          {
+            "text": "None",
+            "value": "",
+            "isNone": true,
+            "selected": true
+          }
+        ],
+        "datasource": "graphite",
+        "query": "*",
+        "refresh": true,
+        "useTags": false,
+        "hideLabel": false,
+        "regex": "/[a-zA-Z]+-\\d+/",
+        "label": "Application",
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "allFormat": "glob",
+        "includeAll": true,
+        "multi": true,
+        "multiFormat": "glob",
+        "current": {
+           "text": "None",
+           "value": "",
+           "isNone": true
+        }
+      },
+      {
+        "type": "query",
+        "name": "executors",
+        "options": [
+          {
+            "text": "All",
+            "value": "{0,1,driver}",
+            "selected": false
+          },
+          {
+            "text": "0",
+            "value": "0",
+            "selected": false
+          },
+          {
+            "text": "1",
+            "value": "1",
+            "selected": false
+          },
+          {
+            "text": "driver",
+            "value": "driver",
+            "selected": true
+          }
+        ],
+        "datasource": "graphite",
+        "query": "$prefix.*",
+        "refresh": true,
+        "useTags": false,
+        "hideLabel": false,
+        "regex": "",
+        "label": "Executors",
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "allFormat": "glob",
+        "includeAll": true,
+        "multi": true,
+        "multiFormat": "glob",
+        "current": {
+          "text": "driver",
+          "value": "driver"
+        }
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "refresh": "30s",
+  "schemaVersion": 8,
+  "version": 0,
+  "links": []
+}
