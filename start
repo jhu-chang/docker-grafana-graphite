@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 CONTAINER_NAME="spark"
 if [ $(docker ps -a | grep $CONTAINER_NAME | awk '{print $NF}' | wc -l) -gt 0 ];then
@@ -10,5 +10,8 @@ if [ -d "./logs" ];then
 fi
 
 docker build -t jhu/spark github.com/jhu-chang/docker-grafana-graphite.git
-docker run -d -v $(pwd)/logs:/var/log/supervisor -p 80:80 -p 81:81 -p 8125:8125/udp -p 8126:8126 -p 2003:2003 --name ${CONTAINER_NAME} jhu/spark 
+docker run -d -v /mnt/sda1/data/kamon-grafana/log/supervisor:/var/log/supervisor -v /mnt/sda1/data/kamon-grafana/log/graphite:/opt/graphite/storage/log  -v /mnt/sda1/data/kamon-grafana/data/grafana:/opt/grafana/data  -v /mnt/sda1/data/kamon-grafana/data/whisper:/opt/graphite/storage/whisper -p 80:80 -p 81:81 -p 8125:8125/udp -p 8126:8126 -p 2003:2003 --name ${CONTAINER_NAME} jhu/spark:2.6 
 
+# -v /mnt/sda1/data/kamon-grafana/data/whisper:/opt/graphite/storage/whisper
+# -v /mnt/sda1/data/kamon-grafana/data/grafana:/opt/grafana/data 
+# -v /mnt/sda1/data/kamon-grafana/log/graphite:/opt/graphite/storage/log 
