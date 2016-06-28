@@ -757,7 +757,7 @@ function completeTaskPanel() {
             [alias(prefix("DAGScheduler.stage.waitingStages"), "Waiting Stages"),
                 alias(prefix("DAGScheduler.stage.runningStages"), "Running Stages")],
             {
-                span : 6,
+                span : 4,
                 pointradius: 1,
                 links: driverLink()
             }
@@ -767,7 +767,7 @@ function completeTaskPanel() {
             "Completed tasks per executor",
             "threadpool.completeTasks",
             {
-                span : 6,
+                span : 4,
                 links: driverLink()
             },
             percentilesAndTotals ? ['total'] : [],
@@ -795,11 +795,26 @@ var threadpool_row = {
                 links: driverLink()
             }
         ),
+        panel(
+            "Proc CPU usage",
+            [
+                aliasByExecutorId("$prefix.*.proc_*.cpu_usage")
+            ],
+            {
+                span : 6,
+                nullPointMode: 'connected',
+                y_formats: [
+                    "percentunit",
+                    "short"
+                ],
+                links: driverLink()
+            }
+        ),
         multiExecutorPanel(
             localMode ? "ActiveJobs" : "Active tasks (stacked per executor)",
             localMode ? "DAGScheduler.job.activeJobs" : "threadpool.activeTasks",
             {
-                span : 6,
+                span : 4,
                 stack: true,
                 fill: 10,
                 nullPointMode: 'connected',
@@ -825,7 +840,7 @@ var threadpool_row = {
                 )
             ],
             {
-                span : 6,
+                span : 4,
                 pointradius: 1,
                 links: driverLink()
             }

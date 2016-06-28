@@ -125,8 +125,79 @@
           "seriesOverrides": []
         },
         {
-          "title": "Active tasks (stacked per executor)",
+          "title": "Proc CPU usage",
           "span": 6,
+          "type": "graph",
+          "nullPointMode": "connected",
+          "datasource": "graphite",
+          "tooltip": {
+            "shared": true,
+            "value_type": "cumulative"
+          },
+          "legend": {
+            "show": true,
+            "hideEmpty": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "targets": [
+            {
+              "target": "aliasSub($prefix.*.proc_*.cpu_usage, '^[^.]+\\.([^.]+)\\..*', '\\1')",
+              "refId": "A"
+            }
+          ],
+          "y_formats": [
+            "percentunit",
+            "short"
+          ],
+          "links": [
+             {
+                "type": "dashboard",
+                "dashboard": "Spark System Dashboards",
+                "dashUri": "db/spark-system-dashboards",
+                "title": "Spark System Dashboards",
+                "keepTime": true,
+                "includeVars": true,
+                "targetBlank": true
+            }
+          ],
+          "id": 17,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "grid": {
+            "leftLogBase": 1,
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "rightLogBase": 1,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "percentage": false,
+          "steppedLine": false,
+          "timeFrom": null,
+          "timeShift": null,
+          "aliasColors": {},
+          "seriesOverrides": []
+        },
+        {
+          "title": "Active tasks (stacked per executor)",
+          "span": 4,
           "type": "graph",
           "nullPointMode": "connected",
           "datasource": "graphite",
@@ -209,7 +280,7 @@
         },
         {
           "title": "Completed tasks per executor",
-          "span": 6,
+          "span": 4,
           "type": "graph",
           "nullPointMode": "null",
           "datasource": "graphite",
@@ -292,7 +363,7 @@
         },
         {
           "title": "Completed tasks per minute per executor",
-          "span": 6,
+          "span": 4,
           "type": "graph",
           "nullPointMode": "null",
           "datasource": "graphite",
