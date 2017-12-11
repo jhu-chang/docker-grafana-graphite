@@ -11,7 +11,7 @@ RUN     apt-get -y update
 RUN     apt-get -y install software-properties-common
 RUN     add-apt-repository -y ppa:chris-lea/node.js
 RUN     apt-get -y install python-django-tagging python-simplejson python-memcache python-ldap python-cairo python-pysqlite2 python-support \
-                           python-pip gunicorn supervisor nginx-light nodejs git wget curl openjdk-7-jre build-essential python-dev
+                           python-pip gunicorn supervisor nginx-light nodejs npm git wget curl openjdk-7-jre build-essential python-dev
 
 RUN     pip install Twisted==11.1.0
 RUN     pip install Django==1.5

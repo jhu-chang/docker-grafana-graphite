@@ -329,6 +329,20 @@ var driverTemplateVar = {
     current: {text: "driver", value: "driver"}
 };
 
+var  appNameTemplateVar = { 
+    type: "custom",
+    name: "APP_NAME_LEVEL",
+    query: "",
+    datasource: "graphite",
+    options: [
+        {text: "One Level", value: "*"},
+        {text: "Two Level", value: "*.*"},
+        {text: "Three Level", value: "*.*.*"},
+        {text: "Four Level", value: "*.*.*.*"},
+    ],
+    current: {text: "One Level", value: "*"}
+};
+
 var executorRangeTemplateVar = {
     type: "custom",
     name: "executorRange",
@@ -725,7 +739,8 @@ var dashboard = {
         list: [
             prefixTemplateVar,
             executorRangeTemplateVar,
-            driverTemplateVar
+            driverTemplateVar,
+            appNameTemplateVar
         ]
     },
     refresh: "10s",
@@ -857,8 +872,8 @@ var streaming_row = {
         panel(
             "Last Batch trends",
             [
-                alias(scale("diffSeries($prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_processingEndTime, $prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime)", 0.001), "Batch Duration"),
-                alias("$prefix.$driver.*.StreamingMetrics.streaming.lastCompletedBatch_schedulingDelay", "Schedule Delay")
+                alias(scale("diffSeries($prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.lastCompletedBatch_processingEndTime, $prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.lastCompletedBatch_processingStartTime)", 0.001), "Batch Duration"),
+                alias("$prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.lastCompletedBatch_schedulingDelay", "Schedule Delay")
             ],
             {
                 span: 4,
@@ -881,13 +896,13 @@ var streaming_row = {
             [
                 alias(nonNegativeDerivative(
                     summarize(
-                        "$prefix.$driver.*.StreamingMetrics.streaming.totalCompletedBatches",
+                        "$prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.totalCompletedBatches",
                         '1m',
                         'max'
                     )
                 ), 'Complete Batch Per Minute'),
                 alias(summarize(
-                    "$prefix.$driver.*.StreamingMetrics.streaming.waitingBatches",
+                    "$prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.waitingBatches",
                     "1m",
                     "sum"
                 ), 'Waiting Batches per minute')
@@ -914,7 +929,7 @@ var streaming_row = {
         ),
         panel(
             "Input Statistics",
-            [alias(perSecond("$prefix.$driver.*.StreamingMetrics.streaming.totalReceivedRecords"), "Event Rate")],
+            [alias(perSecond("$prefix.$driver.$APP_NAME_LEVEL.StreamingMetrics.streaming.totalReceivedRecords"), "Event Rate")],
             {
                 span: 4,
                 nullPointMode: 'connected',
