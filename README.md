@@ -1,4 +1,4 @@
-StatsD + Graphite + Grafana 2 + Kamon Dashboards
+StatsD + Graphite + Grafana 4 + Kamon Dashboards
 ---------------------------------------------
 
 This image contains a sensible default configuration of StatsD, Graphite and Grafana, and comes bundled with a example
@@ -9,24 +9,33 @@ for using this image:
 ### Using the Docker Index ###
 
 This image is published under [Kamon's repository on the Docker Hub](https://hub.docker.com/u/kamon/) and all you
-need as a prerequisite is having Docker installed on your machine. The container exposes the following ports:
+need as a prerequisite is having `docker`, `docker-compose`, and `make` installed on your machine. The container exposes the following ports:
 
 - `80`: the Grafana web interface.
 - `81`: the Graphite web port
+- `2003`: the Graphite data port
 - `8125`: the StatsD port.
 - `8126`: the StatsD administrative port.
 
 To start a container with this image you just need to run the following command:
 
 ```bash
-docker run \
-  --detach \
-   --publish=80:80 \
-   --publish=81:81 \
-   --publish=8125:8125/udp \
-   --publish=8126:8126 \
-   --name kamon-grafana-dashboard \
-   kamon/grafana_graphite
+$ make up
+```
+
+To stop the container
+```bash
+$ make down
+```
+
+To run container's shell
+```bash
+$ make shell
+```
+
+To view the container log
+```bash
+$ make tail
 ```
 
 If you already have services running on your host that are using any of these ports, you may wish to map the container
@@ -37,46 +46,24 @@ ports to whatever you want by changing left side number in the `--publish` param
 
 The Dockerfile and supporting configuration files are available in our [Github repository](https://github.com/kamon-io/docker-grafana-graphite).
 This comes specially handy if you want to change any of the StatsD, Graphite or Grafana settings, or simply if you want
-to know how tha image was built. The repo also has `build` and `start` scripts to make your workflow more pleasant.
+to know how the image was built.
 
 
 ### Using the Dashboards ###
 
 Once your container is running all you need to do is:
-- open your browser pointing to the host/port you just published
+
+- open your browser pointing to http://localhost:80 (or another port if you changed it)
+  - Docker with VirtualBox on macOS: use `docker-machine ip` instead of `localhost`
 - login with the default username (admin) and password (admin)
-- configure a new datasource to point at the Graphite metric data (URL - http://localhost:8000) and replace the default Grafana test datasource for your graphs
-- then play with the dashboard at your wish...
+- open existing dashboard (or create a new one) and select 'Local Graphite' datasource
+- play with the dashboard at your wish...
 
-### Making your data last ###
 
-There are several ways of using Docker volumes to persist the settings and databases of the docker-grafana-graphite container. Here is an example script that will create directories on your host and mount them into the Docker container, allowing graphite and grafana to persist data and settings between runs of the container.
+### Persisted Data ###
 
-```bash
-mkdir kamon-grafana-service
-cd kamon-grafana-service
-mkdir -p data/whisper
-mkdir -p data/elasticsearch
-mkdir -p data/grafana
-mkdir -p log/graphite
-mkdir -p log/graphite/webapp
-mkdir -p log/elasticsearch
-chmod -R 777 *
+When running `make up`, directories are created on your host and mounted into the Docker container, allowing graphite and grafana to persist data and settings between runs of the container.
 
-docker run \
-  --detach \
-   --publish=80:80 \
-   --publish=81:81 \
-   --publish=8125:8125/udp \
-   --publish=8126:8126 \
-   --name kamon-grafana-dashboard \
-   --volume=$(pwd)/data/whisper:/opt/graphite/storage/whisper \
-   --volume=$(pwd)/data/elasticsearch:/var/lib/elasticsearch \
-   --volume=$(pwd)/data/grafana:/opt/grafana/data \
-   --volume=$(pwd)/log/graphite:/opt/graphite/storage/log \
-   --volume=$(pwd)/log/elasticsearch:/var/log/elasticsearch \
-   kamon/grafana_graphite
-```
 
 ### How to visit the spark app ###
 The url to spark monitor is http://192.168.99.100/dashboard/script/spark.js
